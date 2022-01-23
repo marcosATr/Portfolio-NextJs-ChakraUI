@@ -1,4 +1,5 @@
 import { Box, Button, Container, Flex, Heading, Image, Text, VStack, Wrap, WrapItem } from "@chakra-ui/react";
+import Featured from "../components/Featured/Featured";
 import Header from "../components/Header/Header";
 import Recent from "../components/Recent/Recent";
 
@@ -16,6 +17,7 @@ export default function Home() {
       </Container>
       <Header />
       <Recent/>
+      <Featured/>
     </>
   );
 }
