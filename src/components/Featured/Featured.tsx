@@ -1,7 +1,13 @@
 import { Box, Container, Heading } from "@chakra-ui/react";
+import { PagesProps } from "../../pages";
 import Works from "./Works";
 
-export default function Featured() {
+export interface FeaturedProps {
+  work1: PagesProps;
+  work2: PagesProps;
+}
+
+export default function Featured(props:FeaturedProps) {
   return (
     <Container py="8" maxW="container.lg">
       <Box>
@@ -9,7 +15,7 @@ export default function Featured() {
           Featured Work
         </Heading>
       </Box>
-      <Works/>
+      <Works work1={props.work1} work2={props.work2}/>
     </Container>
   );
 }

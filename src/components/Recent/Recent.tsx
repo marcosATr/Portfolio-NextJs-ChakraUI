@@ -20,7 +20,7 @@ export default function Recent(props:RecentProps) {
             </Heading>
           </Box>
           <Box>
-            <Link href="/">View All</Link>
+            <Link href="/blog">View All</Link>
           </Box>
         </Flex>
       </Container>
