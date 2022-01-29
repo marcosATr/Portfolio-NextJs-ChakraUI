@@ -1,12 +1,33 @@
 import { GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import { PagesProps } from "../..";
 import ReactHtmlParser from "react-html-parser";
-import { Code, Container, Heading, Image, Tag, Text } from "@chakra-ui/react";
+import { Code, Container, Heading, Image, ListItem, Tag, Text, UnorderedList } from "@chakra-ui/react";
 import Nav from "../../../components/Nav/Nav";
 import Footer from "../../../components/Footer/Footer";
 
-const Blog = ({ postDetails }) => {
+export interface Article {
+  text?: string;
+  ulli?:string;
+  code?:string;
+  h1?:string;
+  h2?:string;
+  h3?:string;
+  metadata?: {
+    id?:string;
+    createdAt?:string;
+    slug?:string;
+    title?:string;
+  };
+  imageUrl?:string;
+  alt?:string;
+}
+
+interface BlogProps {
+  postDetails: Article[];
+}
+
+const Blog = ({ postDetails}:BlogProps) => {
+
   function convertTime(d: string) {
     const date = new Date(Date.parse(d));
     return date.toUTCString().slice(5, 16);
@@ -14,7 +35,7 @@ const Blog = ({ postDetails }) => {
 
   const res = [];
 
-  postDetails.map((item, ind) => {
+  postDetails.map((item, ind: number) => {
     if (item.metadata) {
       res.push(
         <Heading key={item.metadata.id} size="2xl" py={4}>
@@ -39,13 +60,7 @@ const Blog = ({ postDetails }) => {
     if (item.imageUrl) {
       res.push(<Image key={ind} alt={item.alt} src={item.imageUrl} py={4}></Image>);
     }
-    if (item.code) {
-      res.push(
-        <Code key={ind} py={4}>
-          {item.code}
-        </Code>
-      );
-    }
+
     if (item.h1) {
       res.push(
         <Heading key={ind} size="2xl" py={4}>
@@ -65,6 +80,31 @@ const Blog = ({ postDetails }) => {
         <Heading key={ind} size="lg" py={4}>
           {item.h3}
         </Heading>
+      );
+    }
+    if (item.ulli === "start") {
+      const lis = [];
+      const endIndex = postDetails.findIndex((i, index) => i.ulli === "end" && index > ind);
+      postDetails.forEach((e, i) => {
+        if (i > ind && i < endIndex) {
+          lis.push(e.ulli);
+        }
+      });
+      const ul = (
+        <UnorderedList>
+          {lis.map((li) => (
+            <ListItem key={li}>{li}</ListItem>
+          ))}
+        </UnorderedList>
+      );
+
+      res.push(ul);
+    }
+    if (item.code) {
+      res.push(
+        <Code bg="gray.700" color="teal.200" borderRadius="4px" whiteSpace="pre" p={6} display="block">
+          {ReactHtmlParser(item.code)}
+        </Code>
       );
     }
   });
