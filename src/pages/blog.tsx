@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PagesProps } from ".";
 import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/Nav";
+import ReactHtmlParser from "react-html-parser";
 
 interface BlogProps {
   allPosts: PagesProps[];
@@ -21,13 +22,13 @@ export default function blog({ allPosts }: BlogProps) {
           {allPosts.map((post) => {
             return (
               <VStack key={post.id} bg="white" py={6} boxShadow="sm" align="flex-start" spacing={5}>
-                <Link href={`/blog/${post.slug}`}>
+                <Link href={`/blog/${post.slug}/${post.id}`}>
                   <a>
                     <Heading fontSize="2xl">{post.title}</Heading>
                   </a>
                 </Link>
                 <Text>{post.createdAt}</Text>
-                <Text>{post.excerpt}</Text>
+                <Text>{ReactHtmlParser(post.excerpt)}</Text>
               </VStack>
             );
           })}
