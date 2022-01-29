@@ -1,4 +1,5 @@
-import { Box, Container, Heading } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading } from "@chakra-ui/react";
+import Link from "next/link";
 import { PagesProps } from "../../pages";
 import Works from "./Works";
 
@@ -10,11 +11,16 @@ export interface FeaturedProps {
 export default function Featured(props:FeaturedProps) {
   return (
     <Container py="8" maxW="container.lg">
-      <Box>
-        <Heading fontSize="xl" fontWeight="normal">
-          Featured Work
-        </Heading>
-      </Box>
+      <Flex justifyContent="space-between" align="center">
+          <Box>
+            <Heading fontSize="xl" fontWeight="normal">
+              Latest Projects
+            </Heading>
+          </Box>
+          <Box>
+            <Link href="/works"><a>View All</a></Link>
+          </Box>
+        </Flex>
       <Works work1={props.work1} work2={props.work2}/>
     </Container>
   );

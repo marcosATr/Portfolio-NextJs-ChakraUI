@@ -62,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
       // image: featuredImage,
       // tags: postTags,
       createdAt: createdAt,
-      excerpt: postExcerpt ? postExcerpt.text.slice(0, 165) + "..." : null,
+      excerpt: postExcerpt ? postExcerpt.text.slice(0, 250) + "..." : null,
     };
     allPosts.push(newPost);
   }
