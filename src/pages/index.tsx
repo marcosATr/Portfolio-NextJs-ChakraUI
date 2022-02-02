@@ -4,6 +4,8 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Nav from "../components/Nav/Nav";
 import Recent from "../components/Recent/Recent";
+import Head from "next/head";
+
 
 interface Ulli {
   ulli: string;
@@ -31,6 +33,10 @@ interface HomeProps {
 export default function Home(props: HomeProps) {
   return (
     <>
+    <Head>
+        <title>Portfólio - Marcos Augusto</title>
+        <meta property="og:title" content="Portfólio - Marcos Augusto" key="Portfólio - Marcos Augusto" />
+      </Head>
       <Nav />
       <Header />
       <Recent item1={props.item1} item2={props.item2} />

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { PagesProps } from ".";
 import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/Nav";
+import ReactHtmlParser from "react-html-parser";
+
 
 interface WorkProps {
   allWorks: PagesProps[];
@@ -45,7 +47,7 @@ export default function works({ allWorks }: WorkProps) {
                         );
                       })}
                     </HStack>
-                    <Text>{work.excerpt}</Text>
+                    <Text>{ReactHtmlParser(work.excerpt)}</Text>
                   </VStack>
                 </Flex>
                 <Divider mt={8} />
