@@ -17,7 +17,7 @@ export default function Header() {
           </Link>
         </VStack>
         <Flex align="center" justifyContent={["center", "center", "flex-end"]} w={["100%", "100%", "40%"]} py={8}>
-          <Image src="https://media4.giphy.com/media/ES4Vcv8zWfIt2/giphy.gif?cid=ecf05e47cx5r6i6txunehxknehsr7f1k7n1jyd7sw1gr44qk&rid=giphy.gif&ct=g" alt="me photo" borderRadius="full" /* boxShadow="-7px 15px 0px #EDF7FA" */></Image>
+          <Image marginTop="-70px" src="https://media4.giphy.com/media/ES4Vcv8zWfIt2/giphy.gif?cid=ecf05e47cx5r6i6txunehxknehsr7f1k7n1jyd7sw1gr44qk&rid=giphy.gif&ct=g" alt="me photo" borderRadius="full" /* boxShadow="-7px 15px 0px #EDF7FA" */></Image>
         </Flex>
       </Flex>
     </Container>
