@@ -6,10 +6,10 @@ export default function Footer() {
     <Container maxW="container.lg">
       <VStack spacing={8} p={16}>
         <HStack spacing={8}>
-          <a href="">
+          <a href="https://www.linkedin.com/in/marcos-a-253b14184/">
             <Icon fontSize="3xl" as={FaLinkedin} />
           </a>
-          <a href="">
+          <a href="https://github.com/marcosATr">
             <Icon fontSize="3xl" as={FaGithub} />
           </a>
         </HStack>
