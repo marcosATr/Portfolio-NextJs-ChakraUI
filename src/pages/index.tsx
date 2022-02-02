@@ -69,6 +69,7 @@ export const getStaticProps: GetStaticProps = async () => {
   //fetching works details
   const work1Details = await fetch(`https://api-portfolio-marcos.herokuapp.com/works/${work1.id}`).then((res) => res.json());
   const work2Details = await fetch(`https://api-portfolio-marcos.herokuapp.com/works/${work2.id}`).then((res) => res.json());
+  
   const work1Excerpt = work1Details.find((i) => i.text);
 
   work1["excerpt"] = work1Excerpt.text.slice(0, 165) + "...";

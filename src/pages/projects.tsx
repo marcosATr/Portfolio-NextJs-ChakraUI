@@ -22,13 +22,13 @@ export default function works({ allWorks }: WorkProps) {
             return (
               <Box key={work.id}>
                 <Flex direction={["column", "column", "row"]}>
-                  <Link href={`/works/${work.slug}/${work.id}`} passHref>
+                  <Link href={`/projects/${work.slug}/${work.id}`} passHref>
                     <a>
                       <Image alt={work.image.alt} src={work.image.imageUrl} maxW={["100%", "245px"]} borderRadius="8px" />
                     </a>
                   </Link>
                   <VStack pl={4} align="flex-start" spacing={8}>
-                    <Link href={`/works/${work.slug}/${work.id}`} passHref>
+                    <Link href={`/projects/${work.slug}/${work.id}`} passHref>
                       <a>
                         <Heading fontSize="2xl" pt={[4, 4, 0]}>
                           {work.title}

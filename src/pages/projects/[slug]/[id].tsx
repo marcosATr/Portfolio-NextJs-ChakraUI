@@ -1,43 +1,45 @@
 import { GetStaticProps } from "next";
 import { PagesProps } from "../..";
-import { Container} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import Nav from "../../../components/Nav/Nav";
 import Footer from "../../../components/Footer/Footer";
 import PostProcessor from "../../../components/PostProcessor/PostProcessor";
-import Head from 'next/head';
+import Head from "next/head";
 
 export interface Article {
   text?: string;
-  ulli?:string;
-  code?:string;
-  h1?:string;
-  h2?:string;
-  h3?:string;
+  ulli?: string;
+  code?: string;
+  h1?: string;
+  h2?: string;
+  h3?: string;
   metadata?: {
-    id?:string;
-    createdAt?:string;
-    slug?:string;
-    title?:string;
+    id?: string;
+    createdAt?: string;
+    slug?: string;
+    title?: string;
   };
-  imageUrl?:string;
-  alt?:string;
+  imageUrl?: string;
+  alt?: string;
 }
 
 export interface BlogProps {
   postDetails: Article[];
 }
 
-const Works = ({ postDetails}:BlogProps) => {
-
-
+const Works = ({ postDetails }: BlogProps) => {
   return (
     <>
-    <Head>
+      <Head>
         <title>{postDetails[0].metadata.title}</title>
         <meta property="og:title" content={`${postDetails[0].metadata.title}`} key={`${postDetails[0].metadata.title}`} />
       </Head>
       <Nav />
-      <Container maxW="container.lg"><PostProcessor postDetails={postDetails} /></Container>
+      <Container maxW="container.lg">
+        <article>
+          <PostProcessor postDetails={postDetails} />
+        </article>
+      </Container>
       <Footer />
     </>
   );

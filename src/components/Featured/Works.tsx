@@ -10,7 +10,7 @@ interface FeaturedProps {
 export default function Works(props: FeaturedProps) {
   return (
     <VStack align="flex-start" py={8} spacing={8}>
-      <Link  href={`/works/${props.work1.slug}`}>
+      <Link  href={`/projects/${props.work1.slug}/${props.work1.id}`}>
         <a>
           <Flex direction={["column", "column", "row"]}>
             <Image alt={props.work1.image.alt} src={props.work1.image.imageUrl} maxW={["100%","245px"]} borderRadius='8px' />
@@ -34,7 +34,7 @@ export default function Works(props: FeaturedProps) {
         </a>
       </Link>
 
-      <Link  href={`/works/${props.work2.slug}`}>
+      <Link  href={`/projects/${props.work2.slug}/${props.work2.id}`}>
         <a>
           <Flex direction={["column", "column", "row"]}>
             <Image alt={props.work2.image.alt} src={props.work2.image.imageUrl} maxW={["100%","245px"]} borderRadius='8px' />

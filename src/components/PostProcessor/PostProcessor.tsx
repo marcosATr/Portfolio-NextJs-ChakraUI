@@ -78,7 +78,7 @@ export default function PostProcessor({ postDetails }: BlogProps): JSX.Element {
     }
     if (item.code) {
       res.push(
-        <Code key={ind} bg="gray.700" color="teal.200" borderRadius="4px" whiteSpace="pre" p={6} display="block">
+        <Code key={ind} bg="gray.700" color="teal.200" borderRadius="4px" whiteSpace="pre" p={6} display="block" overflowX={["scroll", "auto"]}>
           {ReactHtmlParser(item.code)}
         </Code>
       );

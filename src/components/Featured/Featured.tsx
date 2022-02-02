@@ -18,7 +18,7 @@ export default function Featured(props:FeaturedProps) {
             </Heading>
           </Box>
           <Box>
-            <Link href="/works"><a>View All</a></Link>
+            <Link href="/projects"><a>View All</a></Link>
           </Box>
         </Flex>
       <Works work1={props.work1} work2={props.work2}/>
