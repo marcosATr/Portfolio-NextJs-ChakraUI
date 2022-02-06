@@ -104,6 +104,6 @@ export const getStaticProps: GetStaticProps = async () => {
       work1,
       work2,
     },
-    revalidate: 60 * 60 * 24,
+    revalidate: 60 * 60,
   };
 };
