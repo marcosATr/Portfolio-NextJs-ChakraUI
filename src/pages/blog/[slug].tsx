@@ -4,7 +4,7 @@ import { Container } from "@chakra-ui/react";
 import Nav from "../../../components/Nav/Nav";
 import Footer from "../../../components/Footer/Footer";
 import PostProcessor from "../../../components/PostProcessor/PostProcessor";
-import Head from "next/head";
+import Head from 'next/head';
 
 export interface Article {
   text?: string;
@@ -27,7 +27,7 @@ export interface BlogProps {
   postDetails: Article[];
 }
 
-const Works = ({ postDetails }: BlogProps) => {
+const Blog = ({ postDetails }: BlogProps) => {
   return (
     <>
       <Head>
@@ -46,22 +46,11 @@ const Works = ({ postDetails }: BlogProps) => {
 };
 
 export async function getStaticPaths() {
-  const posts: PagesProps[] = await fetch("https://api-portfolio-marcos.herokuapp.com/works").then((res) => res.json());
-  const paths = posts.map((post) => ({
-    params: { slug: post.slug, id: post.id },
-  }));
-  return { paths, fallback: false };
+  
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const postDetails = await fetch(`https://api-portfolio-marcos.herokuapp.com/works/${params.id}`).then((res) => res.json());
-  // console.log(postDetails)
-  return {
-    props: {
-      postDetails,
-    },
-    revalidate: 60 * 60,
-  };
+ 
 };
 
-export default Works;
+export default Blog;
