@@ -9,26 +9,7 @@ import ReactHtmlParser from "react-html-parser";
 import Head from "next/head";
 import slugify from "slugify";
 
-export interface Article {
-  text?: string;
-  ulli?: string;
-  code?: string;
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  metadata?: {
-    id?: string;
-    createdAt?: string;
-    slug?: string;
-    title?: string;
-  };
-  imageUrl?: string;
-  alt?: string;
-}
 
-export interface BlogProps {
-  postDetails: Article[];
-}
 
 const Works = ({metadata, html}) => {
   return (

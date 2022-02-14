@@ -7,30 +7,8 @@ import Recent from "../components/Recent/Recent";
 import Head from "next/head";
 
 
-interface Ulli {
-  ulli: string;
-}
-export interface PagesProps {
-  title: string;
-  slug: string;
-  id: string;
-  createdAt: string;
-  excerpt?: string;
-  image?: {
-    imageUrl: string;
-    alt: string;
-  };
-  tags: Ulli[];
-}
 
-interface HomeProps {
-  item1: PagesProps;
-  item2: PagesProps;
-  work1: PagesProps;
-  work2: PagesProps;
-}
-
-export default function Home(props: HomeProps) {
+export default function Home(props) {
   return (
     <>
     <Head>
@@ -47,7 +25,7 @@ export default function Home(props: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const pages: PagesProps[] = await fetch("https://api-portfolio-marcos.herokuapp.com/pages").then((res) => res.json());
+  const pages = await fetch("https://api-portfolio-marcos.herokuapp.com/pages").then((res) => res.json());
   const latest = pages.slice(-2);
   let [item1, item2] = latest;
   const post1 = await fetch(`https://api-portfolio-marcos.herokuapp.com/pages/${item1.id}`).then((res) => res.json());
