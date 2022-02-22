@@ -8,6 +8,7 @@ import path from "path";
 import fs from "fs/promises";
 import showdown from "showdown";
 import slugify from "slugify";
+import { Metadata } from "..";
 
 const Blog = ({ metadata, html }) => {
   return (
@@ -39,9 +40,10 @@ export async function getStaticPaths() {
     const content = await fs.readFile(filepath, "utf8");
     const html = converter.makeHtml(content);
     const metadata = converter.getMetadata();
+
     paths.push({
       params: {
-        slug: slugify(metadata.title).toLowerCase(),
+        slug: slugify(metadata['title']).toLowerCase(),
         filename: post,
       },
     });

@@ -1,11 +1,10 @@
 import { Box, Container, Flex, Heading } from "@chakra-ui/react";
 import Link from "next/link";
-import { PagesProps } from "../../pages";
+import { ItemProps } from "../../pages";
 import Works from "./Works";
 
 export interface FeaturedProps {
-  work1: PagesProps;
-  work2: PagesProps;
+  projects: ItemProps[];
 }
 
 export default function Featured(props:FeaturedProps) {
@@ -21,7 +20,7 @@ export default function Featured(props:FeaturedProps) {
             <Link href="/projects"><a>View All</a></Link>
           </Box>
         </Flex>
-      <Works work1={props.work1} work2={props.work2}/>
+      <Works projects={props.projects}/>
     </Container>
   );
 }

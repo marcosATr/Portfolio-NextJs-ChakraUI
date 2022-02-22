@@ -1,13 +1,12 @@
 import { Box, Container, Flex, Heading } from "@chakra-ui/react";
 import Link from "next/link";
-import { PagesProps } from "../../pages";
+import { ItemProps } from "../../pages";
 import RecentPosts from "./RecentPosts";
 
 
 
 export interface RecentProps {
-  item1: PagesProps;
-  item2: PagesProps;
+  posts: ItemProps[];
 }
 export default function Recent(props:RecentProps) {
   return (
@@ -24,7 +23,7 @@ export default function Recent(props:RecentProps) {
           </Box>
         </Flex>
       </Container>
-      <RecentPosts item1={props.item1} item2={props.item2}/>
+      <RecentPosts posts={props.posts}/>
     </Box>
   );
 }

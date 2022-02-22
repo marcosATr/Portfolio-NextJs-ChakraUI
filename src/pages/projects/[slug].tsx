@@ -8,8 +8,12 @@ import Footer from "../../components/Footer/Footer";
 import ReactHtmlParser from "react-html-parser";
 import Head from "next/head";
 import slugify from "slugify";
+import { Metadata } from "..";
 
 
+interface Info {
+   [key: string]: string 
+}
 
 const Works = ({metadata, html}) => {
   return (
@@ -30,7 +34,7 @@ const Works = ({metadata, html}) => {
 };
 
 export async function getStaticPaths() {
-  const seg = "src/content/works/";
+  const seg = "src/content/projects/";
   const posts = await fs.readdir(seg);
   const converter = new showdown.Converter({ metadata: true });
 
@@ -42,7 +46,7 @@ export async function getStaticPaths() {
     const metadata = converter.getMetadata();
     paths.push({
       params: {
-        slug: slugify(metadata.title).toLowerCase(),
+        slug: slugify(metadata['title']).toLowerCase(),
         filename: post,
       },
     });
@@ -53,7 +57,7 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
-  const seg = "src/content/works/";
+  const seg = "src/content/projects/";
   const filepath = path.join(seg, slug + ".md");
 
   const converter = new showdown.Converter({ metadata: true });

@@ -22,16 +22,16 @@ Link deploy: [https://serene-wright-e2f86e.netlify.app/](https://serene-wright-e
 
 Carrossel animado:
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f3ea16cf-3ef7-4d2c-9957-343ec86b00a7/Untitled.png)
+![pokedex2](/img/pokedex2.png)
 
 Redux _Action Chaining_ para fazer chamadas consecutivas à API.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/313cc8ea-ce73-40ea-ad2c-65fd70b2a2c2/Untitled.png)
+![pokedex3](/img/pokedex3.png)
 
 Responsividade:
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5c6815a1-ad88-4208-8ad0-a706f9b9133f/Untitled.png)
+![pokedex4](/img/pokedex4.png)
 
 Componentes reutilizáveis, com estados independentes e que obedecem ao clique fora do elemento.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c5a360da-cc08-40a8-a0e8-56f93774de44/Untitled.png)
+![pokedex5](/img/pokedex5.png)

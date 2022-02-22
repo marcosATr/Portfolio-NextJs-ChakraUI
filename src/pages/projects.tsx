@@ -1,17 +1,14 @@
 import { Box, Container, Divider, Flex, Heading, HStack, Image, Tag, Text, VStack } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { PagesProps } from ".";
 import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/Nav";
 import ReactHtmlParser from "react-html-parser";
+import fs from "fs/promises";
+import showdown from "showdown";
+import slugify from "slugify";
 
-
-interface WorkProps {
-  allWorks: PagesProps[];
-}
-
-export default function works({ allWorks }: WorkProps) {
+export default function works({ allWorks }) {
   return (
     <>
       <Nav />
@@ -22,32 +19,26 @@ export default function works({ allWorks }: WorkProps) {
           </Heading>
           {allWorks.map((work) => {
             return (
-              <Box key={work.id}>
+              <Box key={work.metadata.title}>
                 <Flex direction={["column", "column", "row"]}>
-                  <Link href={`/projects/${work.slug}/${work.id}`} passHref>
+                  <Link href={`/projects/${work.metadata.slug}`} passHref>
                     <a>
-                      <Image alt={work.image.alt} src={work.image.imageUrl} maxW={["100%", "245px"]} borderRadius="8px" />
+                      <Image alt={work.metadata.title} src={work.metadata.featured} maxW={["100%", "245px"]} borderRadius="8px" />
                     </a>
                   </Link>
                   <VStack pl={4} align="flex-start" spacing={8}>
-                    <Link href={`/projects/${work.slug}/${work.id}`} passHref>
+                    <Link href={`/projects/${work.metadata.slug}`} passHref>
                       <a>
                         <Heading fontSize="2xl" pt={[4, 4, 0]}>
-                          {work.title}
+                          {work.metadata.title}
                         </Heading>
                       </a>
                     </Link>
                     <HStack>
-                      <Text>{work.createdAt} </Text>
-                      {work.tags.map((tag) => {
-                        return (
-                          <Tag key={tag.ulli} colorScheme="twitter">
-                            {tag.ulli}
-                          </Tag>
-                        );
-                      })}
+                      <Text>{work.metadata.date} </Text>
+                      <Tag colorScheme="twitter">{work.metadata.stack}</Tag>
                     </HStack>
-                    <Text>{ReactHtmlParser(work.excerpt)}</Text>
+                    <Text>{ReactHtmlParser(work.metadata.description)}</Text>
                   </VStack>
                 </Flex>
                 <Divider mt={8} />
@@ -62,37 +53,27 @@ export default function works({ allWorks }: WorkProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  //getting the latest two works
-  const works: PagesProps[] = await fetch("https://api-portfolio-marcos.herokuapp.com/works").then((res) => res.json());
-
-  function convertTime(d: string) {
-    const date = new Date(Date.parse(d));
-    return date.toUTCString().slice(5, 16);
-  }
-
+  //getting the latest two posts
   const allWorks = [];
-
-  for await (const work of works) {
-    const workDetails = await fetch(`https://api-portfolio-marcos.herokuapp.com/works/${work.id}`).then((res) => res.json());
-    const workExcerpt = workDetails.find((i) => i.text);
-
-    const featuredImage = workDetails.find((i) => i.imageUrl);
-    const workTags = workDetails.filter((i) => i.ulli);
-    const createdAt = convertTime(work.createdAt);
-    const newWork = {
-      ...work,
-      image: featuredImage,
-      tags: workTags,
-      createdAt: createdAt,
-      excerpt: workExcerpt.text.slice(0, 250) + "...",
-    };
-    allWorks.push(newWork);
+  const seg = "src/content/projects/";
+  const folderFiles = await fs.readdir(seg);
+  for await (const file of folderFiles) {
+    const converter = new showdown.Converter({ metadata: true });
+    const filepath = seg + file;
+    const content = await fs.readFile(filepath, "utf8");
+    const html = converter.makeHtml(content);
+    const metadata = converter.getMetadata();
+    metadata["slug"] = slugify(metadata['title']).toLowerCase();
+    allWorks.push({
+      html,
+      metadata,
+    });
   }
 
   return {
     props: {
       allWorks,
     },
-    revalidate: 60 * 60,
+    revalidate: 60 * 60 * 24,
   };
 };

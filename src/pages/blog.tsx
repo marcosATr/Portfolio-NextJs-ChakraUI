@@ -1,16 +1,16 @@
 import { Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { PagesProps } from ".";
 import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/Nav";
 import ReactHtmlParser from "react-html-parser";
+import fs from "fs/promises";
+import showdown from "showdown";
+import slugify from "slugify";
+// import { Metadata } from ".";
+import Showdown from "showdown";
 
-interface BlogProps {
-  allPosts: PagesProps[];
-}
-
-export default function blog({ allPosts }: BlogProps) {
+export default function blog({ allPosts }) {
   return (
     <>
       <Nav />
@@ -21,14 +21,14 @@ export default function blog({ allPosts }: BlogProps) {
           </Heading>
           {allPosts.map((post) => {
             return (
-              <VStack key={post.id} bg="white" py={6} boxShadow="sm" align="flex-start" spacing={5}>
-                <Link href={`/blog/${post.slug}/${post.id}`}>
+              <VStack key={post.metadata.title} bg="white" py={6} boxShadow="sm" align="flex-start" spacing={5}>
+                <Link href={`/blog/${post.metadata.slug}`}>
                   <a>
-                    <Heading fontSize="2xl">{post.title}</Heading>
+                    <Heading fontSize="2xl">{post.metadata.title}</Heading>
                   </a>
                 </Link>
-                <Text>{post.createdAt}</Text>
-                <Text>{ReactHtmlParser(post.excerpt)}</Text>
+                <Text>{post.metadata.date}</Text>
+                <Text>{ReactHtmlParser(post.metadata.description)}</Text>
               </VStack>
             );
           })}
@@ -41,36 +41,27 @@ export default function blog({ allPosts }: BlogProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   //getting the latest two posts
-  const posts: PagesProps[] = await fetch("https://api-portfolio-marcos.herokuapp.com/pages").then((res) => res.json());
-
-  function convertTime(d: string) {
-    const date = new Date(Date.parse(d));
-    return date.toUTCString().slice(5, 16);
-  }
-
   const allPosts = [];
+  const seg = "src/content/posts/";
+  const folderFiles = await fs.readdir(seg);
+  for await (const file of folderFiles) {
+    const converter = new showdown.Converter({ metadata: true });
+    const filepath = seg + file;
+    const content = await fs.readFile(filepath, "utf8");
+    const html = converter.makeHtml(content);
+    const metadata: string | Showdown.Metadata = converter.getMetadata(false);
 
-  for await (const post of posts) {
-    const postDetails = await fetch(`https://api-portfolio-marcos.herokuapp.com/pages/${post.id}`).then((res) => res.json());
-    const postExcerpt = postDetails.find((i) => i.text);
-
-    // const featuredImage = postDetails.find((i) => i.imageUrl); //blogs do not have a featured image
-    // const workTags = workDetails.filter((i) => i.ulli);
-    const createdAt = convertTime(post.createdAt);
-    const newPost = {
-      ...post,
-      // image: featuredImage,
-      // tags: postTags,
-      createdAt: createdAt,
-      excerpt: postExcerpt ? postExcerpt.text.slice(0, 250) + "..." : null,
-    };
-    allPosts.push(newPost);
+    metadata["slug"] = slugify(metadata['title']).toLowerCase();
+    allPosts.push({
+      html,
+      metadata,
+    });
   }
 
   return {
     props: {
       allPosts,
     },
-    revalidate: 60 * 60,
+    revalidate: 60 * 60 * 24,
   };
 };
